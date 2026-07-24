@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Menu, X, Sun, Moon, Zap } from "lucide-react";
+import { IcCart, IcMenu, IcX, IcSun, IcMoon, IcZap, IcSearch } from "./Icons";
 import { useCart } from "../context/CartContext";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";

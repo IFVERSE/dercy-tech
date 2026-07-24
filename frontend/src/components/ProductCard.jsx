@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ShoppingCart, MessageCircle, Star } from "lucide-react";
+import { IcCart, IcWhatsApp, IcStar, IcHeart, IcHeartFill } from "./Icons";
 import { useCart } from "../context/CartContext";
 import { formatPrice, productWhatsApp } from "../utils/helpers";
 import toast from "react-hot-toast";
