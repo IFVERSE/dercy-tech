@@ -16,10 +16,20 @@ async def lifespan(app: FastAPI):
     seed_admin()
     yield
 
-app = FastAPI(title="Dercy Tech API", version="1.0.0", lifespan=lifespan)
+app = FastAPI(
+    title="Dercy Tech API",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
-origins = os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
+# Allow all localhost ports plus production URL
+origins_str = os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:3000"
+)
+origins = [o.strip() for o in origins_str.split(",")]
 
+# Also add wildcard for local development
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -28,13 +38,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
-app.include_router(products.router, prefix="/api/products", tags=["Products"])
-app.include_router(orders.router, prefix="/api/orders", tags=["Orders"])
-app.include_router(payments.router, prefix="/api/payments", tags=["Payments"])
+app.include_router(auth.router,          prefix="/api/auth",          tags=["Auth"])
+app.include_router(products.router,      prefix="/api/products",      tags=["Products"])
+app.include_router(orders.router,        prefix="/api/orders",        tags=["Orders"])
+app.include_router(payments.router,      prefix="/api/payments",      tags=["Payments"])
 app.include_router(consultations.router, prefix="/api/consultations", tags=["Consultations"])
-app.include_router(vendors.router, prefix="/api/vendors", tags=["Vendors"])
-app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
+app.include_router(vendors.router,       prefix="/api/vendors",       tags=["Vendors"])
+app.include_router(admin.router,         prefix="/api/admin",         tags=["Admin"])
 
 @app.get("/")
 def root():
